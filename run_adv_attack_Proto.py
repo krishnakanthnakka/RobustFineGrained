@@ -120,7 +120,7 @@ def main(args):
     # --------------------------------------------- Prepare attack ----------------------------------------------
 
     attack_params = get_attack_params(args.attack)
-    print("Attack type: {}, \nEpsilon: {:.5f}, \nAlpha: {:.5f},  \nIters: {}\n".format(
+    print("Attack type: {}, Epsilon: {:.5f}, Alpha: {:.5f},  Iters: {}\n".format(
         attack_params['TYPE'], attack_params['EPS'], attack_params['ALPHA'], attack_params['ITERS']))
 
     # --------------------------------------------- Run attack --------------------------------------------------
