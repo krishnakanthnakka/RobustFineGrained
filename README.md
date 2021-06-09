@@ -68,7 +68,7 @@ docker load  -i ./path_to_docker/accv.tar
 4. Training
    -  TBA
 5. Pretrained models
-    - We released few pretrained robust models on vgg16 - [Link](https://drive.switch.ch/index.php/s/DOl73Nrv8I6gJ1v). Please download and put in this root folder.
+    - We released [pretrained robust models](https://drive.switch.ch/index.php/s/DOl73Nrv8I6gJ1v) on vgg16 backobone. Please download and put in this root folder.
 6. Evaluation of Robust models
     - For testing on robust models with our approach(Ours-A or Ours-FR), please run:
     - ```shell
