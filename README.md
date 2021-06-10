@@ -24,10 +24,6 @@ Our approach consists of two modules acting on the features extracted by a backb
 </p>
 <br>
 
-## Updates
-
-2020/11：This code will be updated!
-TBA 1.Merge all baseline approaches 2. Training code. 3. Adversarial detection code.
 
 
 
@@ -39,10 +35,6 @@ In order to load the docker image, please use the command as below;
 ```bash
 docker load  -i ./path_to_docker/accv.tar
 ```
-
-
-
-
 
 ## Usage
 
@@ -91,7 +83,6 @@ docker load  -i ./path_to_docker/accv.tar
       python run_adv_attack_Proto.py  -dataset=cub200  -config=settings_robust.yaml \
       -mode=robust -split=test -backbone=vgg16 -net=Proto -checkpoint=model.pth -attack=fgsm1_2
       ```
-    - TBA: Merge multiple folders containing different approaches with this.
 
 
     - ```shell
@@ -109,11 +100,6 @@ docker load  -i ./path_to_docker/accv.tar
 
 
 
-
-
-
-7. Adversarial Detection of Robust models
-  - TBA
 
 ## Citation
 
