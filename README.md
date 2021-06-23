@@ -51,9 +51,8 @@ docker load  -i ./path_to_docker/accv.tar
 3. Dataset
    - Download the  [CUB200](http://www.vision.caltech.edu/visipedia/CUB-200.html) dataset.
    Crop the images using bounding box information.
-   - Please put CUB200 test dataset in folder `./datasets/cub200_cropped/test_cropped/` and train dataset in  `./datasets/cub200_cropped/train_cropped/`. For training, we use same augmentation as ProtoPNet and save in the folder  `./datasets/cub200_cropped/train_cropped_augmented/`. Please refer to [ProtoPNet](https://github.com/cfchen-duke/ProtoPNet) for instructions on data augmentation.
-   - Please check the [ProtoPNet](https://github.com/cfchen-duke/ProtoPNet)
-   for preparing the augmented dataset.
+   - Please put CUB200 test dataset in folder `./datasets/cub200_cropped/test_cropped/` and train dataset in  `./datasets/cub200_cropped/train_cropped/`. For training, we use same augmentation as ProtoPNet and save in the folder  `./datasets/cub200_cropped/train_cropped_augmented/`.
+   - Please refer to [ProtoPNet](https://github.com/cfchen-duke/ProtoPNet) for preparing the augmented dataset.
 
 4. Training
    -  Normal training
