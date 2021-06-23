@@ -28,9 +28,9 @@ Our approach consists of two modules acting on the features extracted by a backb
 
 
 ## Requirements
-We provide a docker image shared in this [google drive location](https://drive.google.com/file/d/1ormSCfk0zXMuYz9MwJxddH9Dukiziyc-/view?usp=sharing). Please build this image to get exact training environment. For the hard-ware infrastructure, we use NVIDIA Tesla V100 32GB as the GPU resource.
+We provide a docker image shared in this [google drive location](https://drive.google.com/file/d/1ormSCfk0zXMuYz9MwJxddH9Dukiziyc-/view?usp=sharing). Please build this image to get the exact training environment. For the hardware infrastructure, we use NVIDIA Tesla V100 32GB as the GPU resource.
 
-In order to load the docker image, please use the command as below; and push it to registry
+To load the docker image, please use the command below; and push it to the registry
 
 ```bash
 docker load  -i ./path_to_docker/accv.tar
@@ -38,12 +38,12 @@ docker load  -i ./path_to_docker/accv.tar
 
 ## Usage
 
-1. Install pytorch
+1. Install PyTorch
 
-   - The code is tested on Python 3.6, Torch 1.4.0 and NumPy 1.18.1.
+   - The code is tested on Python 3.6, Torch 1.4.0, and NumPy 1.18.1.
    - The code is modified from [ProtoPNet](https://github.com/cfchen-duke/ProtoPNet).
 
-2. Clone the resposity
+2. Clone the repository
 
    ```shell
    git clone https://github.com/krishnakanthnakka/RobustFineGrained/
