@@ -37,7 +37,6 @@ from utils import save
 from torch.backends import cudnn
 cudnn.benchmark = True
 from pprint import pformat
-from utils.save import plot
 
 
 # -----------------------------------------------------------------------------------------------------------
@@ -120,23 +119,28 @@ def main(args):
 
     # ---------------------------- Nodel and Optimizer -----------------------------------
 
-    ppnet = model.construct_PPNet(base_architecture=NET_ARGS['base_architecture'],
-                                  pretrained=True, img_size=DATA_ARGS['img_size'],
-                                  prototype_shape=NET_ARGS['prototype_shape'],
-                                  num_classes=DATA_ARGS['num_classes'],
-                                  prototype_activation_function=NET_ARGS['prototype_activation_function'],
-                                  add_on_layers_type=NET_ARGS['add_on_layers_type'],
-                                  att_version=NET_ARGS['ATT_VERSION'])
+    ppnet = model_AttProto.construct_PPNet(base_architecture=NET_ARGS['base_architecture'],
+                                           pretrained=True, img_size=DATA_ARGS['img_size'],
+                                           prototype_shape=NET_ARGS['prototype_shape'],
+                                           num_classes=DATA_ARGS['num_classes'],
+                                           prototype_activation_function=NET_ARGS['prototype_activation_function'],
+                                           add_on_layers_type=NET_ARGS['add_on_layers_type'],
+                                           att_version=NET_ARGS['ATT_VERSION'])
 
     ppnet = ppnet.cuda()
 
     if EXP_ARGS['RESUME']['iS_RESUME']:
-        ppnet = torch.load(EXP_ARGS['RESUME']['PATH'])
-        log(" Resumed from model: {}".format(EXP_ARGS['RESUME']['PATH']))
-        ppnet_multi = torch.nn.DataParallel(ppnet)
-        accu = tnt.test(model=ppnet_multi, dataloader=test_loader,
-                        class_specific=True, log=log, EXP_ARGS=EXP_ARGS)
-        log("\nInit Accuracy {:.2f} \n\n".format(accu))
+
+        if not os.path.exists(EXP_ARGS['RESUME']['PATH']):
+            log("Classifier trained on  normal images is not found. Skipping it.")
+
+        else:
+            ppnet = torch.load(EXP_ARGS['RESUME']['PATH'])
+            log(" Resumed from model: {}".format(EXP_ARGS['RESUME']['PATH']))
+            ppnet_multi = torch.nn.DataParallel(ppnet)
+            accu = tnt.test(model=ppnet_multi, dataloader=test_loader,
+                            class_specific=True, log=log, EXP_ARGS=EXP_ARGS)
+            log("\nInit Accuracy {:.2f} \n\n".format(accu))
 
     ppnet_multi = torch.nn.DataParallel(ppnet)
 
@@ -258,9 +262,6 @@ def main(args):
                                                     target_accu=target_accu, log=log,
                                                     best=True, stage='postpush_{}'.format(epoch),
                                                     num_classes=DATA_ARGS['num_classes'])
-
-                    plot(ppnet, model_dir + "/tsneplots/", str(epoch) +
-                         '_' + str(i) + 'push', DATA_ARGS['num_classes'])
 
                     log("Best Accuracy - PostPush {:.2f} at epoch {} and iter {}"
                         .format(max_acc_post, max_acc_post_epoch, max_acc_post_iter))

@@ -2,6 +2,7 @@ import time
 import torch
 from utils.helpers import list_of_distances, make_one_hot
 from datasets.preprocess import mean, std
+from utils.adv_utils import attack_fns_AttProto, get_attack_params
 
 
 def normalize_fn(t):
@@ -35,12 +36,13 @@ def _train_or_test(model, dataloader, optimizer=None, class_specific=True, use_l
         if True:
 
             ATTACK_ARGS = EXPS_ARGS['ATTACK_ARGS'] if is_train else EXPS_ARGS['ATTACK_EVAL_ARGS']
-            adv = attack(model, criterion, input, target,
-                         eps=float(ATTACK_ARGS['EPS']),
-                         alpha=float(ATTACK_ARGS['ALPHA']),
-                         attack_type=ATTACK_ARGS['TYPE'],
-                         iters=ATTACK_ARGS['ITERS'],
-                         normalize_fn=normalize_fn)
+            adv = attack_fns_AttProto(model, criterion, input, target,
+                                      eps=float(ATTACK_ARGS['EPS']),
+                                      alpha=float(ATTACK_ARGS['ALPHA']),
+                                      attack_type=ATTACK_ARGS['TYPE'],
+                                      iters=ATTACK_ARGS['ITERS'],
+                                      normalize_fn=normalize_fn,
+                                      branch='FR')
 
             adv_labels = target
 
@@ -153,10 +155,10 @@ def _train_or_test(model, dataloader, optimizer=None, class_specific=True, use_l
             log('\t   {:20s} \t{:<.5f}'.format("cross ent: ", total_cross_entropy / n_batches))
             log('\t   {:20s} \t{:<.5f}'.format(
                 "cross ent_att: ", total_cross_entropy_att / n_batches))
-            if EXP_ARGS['LOSS']['CLUSTER_ATT_COST']:
+            if EXPS_ARGS['LOSS']['CLUSTER_ATT_COST']:
                 log('\t   {:20s} \t{:<.10f}'.format(
                     "cluster_att: ", total_cluster_att_cost / n_batches))
-            if EXP_ARGS['LOSS']['SEP_ATT_COST']:
+            if EXPS_ARGS['LOSS']['SEP_ATT_COST']:
                 log('\t   {:20s} \t{:<.10f}'.format(
                     "separation_att: ", total_separation_att_cost / n_batches))
             log('\t   {:20s} \t{:.2f}%'.format("accu: ", n_correct / n_examples * 100))
@@ -171,10 +173,10 @@ def _train_or_test(model, dataloader, optimizer=None, class_specific=True, use_l
     log('\t{:20s} \t{:<.5f}'.format("cross ent: ", total_cross_entropy / n_batches))
     log('\t{:20s} \t{:<.5f}'.format(
         "cross ent_att: ", total_cross_entropy_att / n_batches))
-    if EXP_ARGS['LOSS']['CLUSTER_ATT_COST']:
+    if EXPS_ARGS['LOSS']['CLUSTER_ATT_COST']:
         log('\t{:20s} \t{:<.10f}'.format(
             "cluster_att: ", total_cluster_att_cost / n_batches))
-    if EXP_ARGS['LOSS']['SEP_ATT_COST']:
+    if EXPS_ARGS['LOSS']['SEP_ATT_COST']:
         log('\t{:20s} \t{:<.10f}'.format(
             "separation_att: ", total_separation_att_cost / n_batches))
     log('\t{:20s} \t{:.2f}%'.format("accu: ", n_correct / n_examples * 100))
@@ -226,7 +228,7 @@ def last_only(model, log=print):
     for p in model.module.last_layer.parameters():
         p.requires_grad = True
 
-    log('\tlast layer')
+    log('\nOptimizer: Last Layer')
 
 
 def warm_only(model, log=print):
@@ -240,7 +242,7 @@ def warm_only(model, log=print):
     for p in model.module.last_layer.parameters():
         p.requires_grad = True
 
-    log('\twarm')
+    log('\nOptimizer: Warm')
 
 
 def joint(model, log=print):
@@ -254,4 +256,4 @@ def joint(model, log=print):
     for p in model.module.last_layer.parameters():
         p.requires_grad = True
 
-    log('\tjoint')
+    log('Optimizer: Joint')
