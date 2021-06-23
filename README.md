@@ -30,7 +30,7 @@ Our approach consists of two modules acting on the features extracted by a backb
 ## Requirements
 We provide a docker image shared in this [google drive location](https://drive.google.com/file/d/1ormSCfk0zXMuYz9MwJxddH9Dukiziyc-/view?usp=sharing). Please build this image to get exact training environment. For the hard-ware infrastructure, we use NVIDIA Tesla V100 32GB as the GPU resource.
 
-In order to load the docker image, please use the command as below;
+In order to load the docker image, please use the command as below; and push it to registry
 
 ```bash
 docker load  -i ./path_to_docker/accv.tar
@@ -40,7 +40,7 @@ docker load  -i ./path_to_docker/accv.tar
 
 1. Install pytorch
 
-   - The code is tested on Python 3.6, Torch 1.4.0 and NumPy 1.18.1. Please use the same versions for reproducing the experiments.
+   - The code is tested on Python 3.6, Torch 1.4.0 and NumPy 1.18.1.
    - The code is modified from [ProtoPNet](https://github.com/cfchen-duke/ProtoPNet).
 
 2. Clone the resposity
@@ -49,11 +49,9 @@ docker load  -i ./path_to_docker/accv.tar
    git clone https://github.com/krishnakanthnakka/RobustFineGrained/
    ```
 3. Dataset
-   - Download the  [Cars196](https://ai.stanford.edu/~jkrause/cars/car_dataset.html) and [CUB200](http://www.vision.caltech.edu/visipedia/CUB-200.html) dataset.
+   - Download the  [CUB200](http://www.vision.caltech.edu/visipedia/CUB-200.html) dataset.
    Crop the images using bounding box information.
    - Please put CUB200 test dataset in folder `./datasets/cub200_cropped/test_cropped/` and train dataset in  `./datasets/cub200_cropped/train_cropped/`. For training, we use same augmentation as ProtoPNet and save in the folder  `./datasets/cub200_cropped/train_cropped_augmented/`. Please refer to [ProtoPNet](https://github.com/cfchen-duke/ProtoPNet) for instructions on data augmentation.
-   - Similarily, For Cars196, put the test dataset in folder `./datasets/cars196_cropped/test_cropped/`, train dataset in  `./datasets/cars196_cropped/train_cropped/`
-   and augmented training dataset in  `./datasets/cars196_cropped/train_cropped_augmented/`.
    - Please check the [ProtoPNet](https://github.com/cfchen-duke/ProtoPNet)
    for preparing the augmented dataset.
 
