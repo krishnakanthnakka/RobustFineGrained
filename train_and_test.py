@@ -87,7 +87,7 @@ def _train_or_test(model, dataloader, optimizer=None, class_specific=True, use_l
             if class_specific:
                 if coefs is not None:
                     loss = (coefs['crs_ent'] * cross_entropy +
-                            coefs['l1'] * l1 + cross_entropy_att * 1.0)
+                            coefs['l1'] * l1 + cross_entropy_att * coefs['crs_ent'])
 
                     if EXP_ARGS['LOSS']['CLUSTER_ATT_COST']:
                         loss += coefs['clst_att'] * cluster_att_cost
@@ -95,13 +95,6 @@ def _train_or_test(model, dataloader, optimizer=None, class_specific=True, use_l
                     if EXP_ARGS['LOSS']['SEP_ATT_COST']:
                         loss += coefs['sep_att'] * separation_att_cost
 
-            else:
-                if coefs is not None:
-                    loss = (coefs['crs_ent'] * cross_entropy
-                            + coefs['clst'] * cluster_cost
-                            + coefs['l1'] * l1)
-                else:
-                    loss = cross_entropy + 0.8 * cluster_cost + 1e-4 * l1
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()

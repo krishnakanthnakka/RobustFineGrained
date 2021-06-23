@@ -127,7 +127,7 @@ def _train_or_test(model, dataloader, optimizer=None, class_specific=True, use_l
             if class_specific:
                 if coefs is not None:
                     loss = (coefs['crs_ent'] * cross_entropy +
-                            coefs['l1'] * l1 + cross_entropy_att * 1.0)
+                            coefs['l1'] * l1 + cross_entropy_att * coefs['crs_ent'])
 
                     if EXPS_ARGS['LOSS']['CLUSTER_ATT_COST']:
                         loss += coefs['clst_att'] * cluster_att_cost
