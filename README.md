@@ -62,7 +62,7 @@ docker load  -i ./path_to_docker/accv.tar
       ```
     - Adversarial training:
     - ```shell
-      python train.py --net=AttProto --mode=robust --backbone=vgg16 --dataset=cub200
+      python train_robust.py --net=AttProto --mode=robust --backbone=vgg16 --dataset=cub200
       ```
 
 5. Pretrained models
