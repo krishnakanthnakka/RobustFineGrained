@@ -34,7 +34,7 @@ EXP_ARGS:
     warm_optimizer_lrs: {'att_layer': 0.003,'add_on_layers': 0.003,'prototype_vectors': 0.003}
     last_layer_optimizer_lrs: {'last_layer_optimizer_lr': 0.0001, 'last_layer_optimizer_iters': 21, 'last_lr_step_size': 7}
 
-  num_train_epochs: 31000
+  num_train_epochs: 31
   num_warm_epochs: 5
   push_start: 30
   start_epoch: 0
