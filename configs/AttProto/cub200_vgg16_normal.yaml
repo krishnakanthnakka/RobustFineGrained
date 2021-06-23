@@ -1,0 +1,76 @@
+NET_ARGS:
+  base_architecture: 'vgg16'
+  prototype_shape: [2000, 128, 1, 1]
+  ATT_VERSION: 2
+  mean: [0.485, 0.456, 0.406]
+  std: [0.229, 0.224, 0.225]
+  prototype_activation_function: 'log'
+  add_on_layers_type: 'regular'
+
+DATA_ARGS:
+  img_size: 224
+  num_classes: 200
+
+  # set the paths for datasets
+  data_path: './datasets/cub200_cropped/'
+  train_dir: './datasets/cub200_cropped/train_cropped_augmented/'
+  test_dir: './datasets/cub200_cropped/test_cropped/'
+  train_push_dir: './datasets/cub200_cropped/train_cropped/'
+  attack_train_dir: './datasets/cub200_cropped/train_cropped/'
+  attack_test_dir: './datasets/cub200_cropped/test_cropped/'
+
+EXP_ARGS:
+  experiment_run: '100'  #not used here
+  train_batch_size: 80
+  test_batch_size: 100
+  train_push_batch_size: 75
+
+  RESUME:
+    iS_RESUME: False
+    PATH: ''
+
+  OPTIMIZER:
+    joint_optimizer_lrs: {'features': 0.0001, 'add_on_layers': 0.003,'prototype_vectors': 0.003,'att_layer': 0.003, 'joint_lr_step_size': 10}
+    warm_optimizer_lrs: {'att_layer': 0.003,'add_on_layers': 0.003,'prototype_vectors': 0.003}
+    last_layer_optimizer_lrs: {'last_layer_optimizer_lr': 0.0001, 'last_layer_optimizer_iters': 21, 'last_lr_step_size': 7}
+
+  num_train_epochs: 30
+  num_warm_epochs: 5
+  push_start: 30
+  start_epoch: 0
+
+  ATTACK_ARGS:
+    TYPE: 'fgsm'
+    EPS:   0.03137254901 # 8/255
+    ALPHA: 0.03921568627 # (1.25x8)/255
+    ITERS: 1
+
+  ATTACK_EVAL_ARGS:
+    TYPE: 'pgd'
+    EPS:  0.03137254901  # 8/255
+    ALPHA: 0.00784313725  # 2/255
+    ITERS: 10
+
+  LOSS:
+
+    SEP_ATT_COST: True
+    CLUSTER_ATT_COST: True
+    loss_coefs_warm: {
+        'crs_ent': 1,
+        'l1': 0.0001,
+        'clst_att': 0.0,
+        'sep_att': 0.0,
+    }
+
+    loss_coefs_joint: {
+        'crs_ent': 1,
+        'l1': 0.0001,
+        'clst_att': 100.0,
+        'sep_att': -0.08,      #check
+    }
+
+
+
+
+
+

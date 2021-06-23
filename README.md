@@ -58,7 +58,12 @@ docker load  -i ./path_to_docker/accv.tar
    for preparing the augmented dataset.
 
 4. Training
-   -  TBA
+   -  Normal training
+    - ```shell
+      python train.py --net=AttProto --mode=normal --backbone=vgg16 --dataset=cub200
+      ```
+    - Adversarial training: TBA
+
 5. Pretrained models
     - We released [pretrained robust models](https://drive.switch.ch/index.php/s/DOl73Nrv8I6gJ1v) on vgg16 backobone. Please download and put in this root folder.
 6. Evaluation of Robust models
