@@ -20,7 +20,7 @@ DATA_ARGS:
   attack_test_dir: './datasets/cub200_cropped/test_cropped/'
 
 EXP_ARGS:
-  experiment_run: '100'  #not used here
+  experiment_run: ''  #not used here
   train_batch_size: 80
   test_batch_size: 100
   train_push_batch_size: 75
