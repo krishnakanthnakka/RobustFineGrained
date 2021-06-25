@@ -71,7 +71,7 @@ def main(args):
     DATA_ARGS = cfg['DATA_ARGS']
     EXP_ARGS = cfg['EXP_ARGS']
 
-    os.environ['CUDA_VISIBLE_DEVICES'] = '0'
+    os.environ['CUDA_VISIBLE_DEVICES'] = '0,1'
 
     model_dir = os.path.join('./saved_models/', args.dataset, args.backbone,
                              args.net, args.mode)
